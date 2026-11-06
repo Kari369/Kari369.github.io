@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Karinate Ebimo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Karinate D. Ebimo, Lagos. Developing Human–Machine Intent Synchronization (HMIS) and testing it in robotics simulation.">
+<meta property="og:title" content="Karinate Ebimo">
+<meta property="og:description" content="Developing Human–Machine Intent Synchronization (HMIS) and testing it in robotics simulation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://kari369.github.io/img/profile.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: a quiet editorial column on cream; burgundy carries headings, links and dates; rose only for hairlines */
+:root {
+  --cream: #F5EFE3;
+  --cream-deep: #EDE4D4;
+  --burgundy: #501D2B;
+  --charcoal: #393633;
+  --muted: #625b55;
+  --rose: #B58A83;
+  --white: #FBF8F2;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--charcoal);
+  font: 400 17px/1.65 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--cream); }
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--burgundy); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--burgundy); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); color: var(--burgundy); font-weight: 600; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+
+.inner {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.eyebrow { font: 600 12.5px/1.3 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+/* Nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--cream) 94%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--rose) 45%, transparent); backdrop-filter: blur(6px); }
+.nav .inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.nav .name { font: 600 18px/1 var(--font-display); color: var(--burgundy); text-decoration: none; white-space: nowrap; }
+.nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; overflow-x: auto; }
+.nav ul a { color: var(--charcoal); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.nav ul a:hover { color: var(--burgundy); }
+
+section { padding-block: 88px; }
+section + section { border-top: 1px solid color-mix(in srgb, var(--rose) 40%, transparent); }
+.section-head { display: grid; gap: 10px; margin-bottom: 40px; max-width: 640px; }
+.section-head h2 { font-size: clamp(1.9rem, 4vw, 2.5rem); line-height: 1.12; }
+
+/* Hero */
+.hero { padding-block: 72px 88px; }
+.hero .inner { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
+.hero .question { font: 400 clamp(1.75rem, 3.6vw, 2.6rem)/1.22 var(--font-display); color: var(--burgundy); letter-spacing: -0.01em; }
+.hero .question em { font-style: italic; }
+.hero .copy { display: grid; gap: 28px; min-width: 0; }
+.hero .intro { max-width: 58ch; font-size: 1.08rem; }
+.hero .intro strong { font-weight: 600; color: var(--charcoal); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 26px; font-weight: 600; font-size: 15px; }
+.portrait { margin: 0; justify-self: end; width: min(100%, 360px); }
+.portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: 2px; }
+.portrait figcaption { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+/* Why */
+.why .inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(32px, 6vw, 80px); }
+.why .body { display: grid; gap: 20px; max-width: 62ch; font-size: 1.08rem; }
+.why .body p:first-child::first-line { font-weight: 600; }
+
+/* Projects */
+.status { display: inline-flex; align-items: center; gap: 8px; font: 600 12.5px/1 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--burgundy); }
+.status.theory::before { background: transparent; border: 1.5px solid var(--burgundy); }
+.status.early::before { background: var(--rose); }
+
+.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); padding: 36px 0 44px; border-top: 2px solid var(--burgundy); }
+.feature h3 { font-size: clamp(1.6rem, 3vw, 2rem); line-height: 1.15; margin-top: 14px; }
+.feature .q { font: italic 400 1.3rem/1.4 var(--font-display); color: var(--charcoal); }
+.feature .detail { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.pilot-shot { margin: 8px 0 0; }
+.pilot-shot img { width: 100%; aspect-ratio: 16 / 11; object-fit: cover; border-radius: 2px; background: var(--cream-deep); }
+.pilot-shot figcaption { margin-top: 8px; font-size: 13.5px; color: var(--muted); }
+
+.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 36px; margin-top: 8px; }
+.project { display: grid; gap: 14px; align-content: start; min-width: 0; padding-top: 22px; border-top: 1px solid var(--rose); }
+.project .shot { aspect-ratio: 16 / 10; width: 100%; max-width: 100%; object-fit: cover; background: var(--cream-deep); border-radius: 2px; }
+.project .shot.diagram { object-fit: contain; background: #0b0e14; }
+.project h3 { font-size: 1.35rem; line-height: 1.2; }
+.project p { font-size: 15.5px; }
+dl.facts { margin: 0; display: grid; gap: 10px; font-size: 15px; }
+dl.facts div { display: grid; gap: 1px; }
+dl.facts dt { font: 600 12px/1.3 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+dl.facts dd { margin: 0; }
+.project .links, .feature .links { font-size: 14.5px; gap: 6px 20px; }
+
+/* Timeline */
+.journey .head-row { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+.journey .head-row .section-head { margin-bottom: 0; }
+.controls { display: flex; gap: 10px; }
+.controls button {
+  font: 600 14px/1 var(--font-body); color: var(--burgundy); background: transparent;
+  border: 1px solid var(--burgundy); border-radius: 2px; padding: 11px 16px; cursor: pointer;
+}
+.controls button:hover:not(:disabled) { background: var(--burgundy); color: var(--cream); }
+.controls button:disabled { opacity: 0.35; cursor: default; }
+.track {
+  list-style: none; margin: 0; padding: 4px 2px 18px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 2 * 28px) / 3); gap: 28px;
+  overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+  scrollbar-width: thin; scrollbar-color: var(--rose) transparent;
+}
+.track > li { scroll-snap-align: start; display: grid; gap: 10px; align-content: start; padding: 22px 22px 26px; background: var(--white); border-top: 2px solid var(--burgundy); min-width: 0; }
+.track time { font: italic 400 1.9rem/1.05 var(--font-display); color: var(--burgundy); font-variant-numeric: lining-nums; letter-spacing: -0.01em; }
+.track .approx { display: block; margin-top: 6px; font: 400 13px/1.3 var(--font-body); font-style: normal; color: var(--muted); letter-spacing: 0; }
+.track h3 { font-size: 1.2rem; line-height: 1.25; }
+.track p { font-size: 15.5px; }
+.track img, .track .year { order: -1; aspect-ratio: 16 / 10; width: 100%; max-width: 100%; object-fit: cover; border-radius: 2px; background: var(--cream-deep); }
+.track .year { display: grid; place-items: center; font: italic 400 clamp(2.4rem, 5vw, 3.4rem)/1 var(--font-display); color: var(--rose); letter-spacing: -0.01em; }
+.legend { margin-top: 14px; font-size: 13.5px; color: var(--muted); }
+
+/* Writing */
+.writing-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.writing-list li { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 24px; padding-block: 24px; border-top: 1px solid var(--rose); }
+.writing-list li:last-child { border-bottom: 1px solid var(--rose); }
+.writing-list time { font: 600 14px/1.6 var(--font-body); color: var(--muted); font-variant-numeric: tabular-nums; }
+.writing-list a { font: 600 1.3rem/1.3 var(--font-display); text-decoration: none; }
+.writing-list a:hover { text-decoration: underline; }
+.writing-list .tag { display: block; margin-top: 6px; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.writing-list p { margin-top: 6px; max-width: 64ch; font-size: 15.5px; }
+
+/* Contact */
+.contact { background: var(--white); }
+.contact .inner { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+.contact .body { display: grid; gap: 18px; max-width: 56ch; font-size: 1.08rem; }
+.contact ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.contact li { display: grid; gap: 2px; }
+.contact .email { font-weight: 600; user-select: all; word-break: break-all; }
+footer { background: var(--burgundy); color: var(--cream); }
+footer .inner { padding-block: 22px; font-size: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .track { grid-auto-columns: calc((100% - 28px) / 2); }
+}
+@media (max-width: 720px) {
+  section { padding-block: 64px; }
+  .hero .inner, .why .inner, .feature, .contact .inner { grid-template-columns: minmax(0, 1fr); }
+  .portrait { justify-self: start; width: min(100%, 300px); grid-row: 1; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .track { grid-auto-columns: 86%; gap: 20px; }
+  .writing-list li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .nav ul { gap: 16px; }
+  .nav .name { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="inner">
+    <a class="name" href="#top">Karinate Ebimo</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#why">Why</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-label="Introduction">
+    <div class="inner">
+      <div class="copy">
+        <p class="eyebrow">Karinate D. Ebimo · Lagos, Nigeria</p>
+        <h1 class="question">In areas too vast or physically impossible for humans to reach, how can robots serve as extensions of human perception, <em>not through the simple execution of commands, but through synchronized intent</em> weighted against other factors?</h1>
+        <p class="intro">I'm a student at The Knowledge Society, on a gap year developing my theoretical framework, <strong>Human–Machine Intent Synchronization (HMIS)</strong>, while building the technical foundations needed to explore it.</p>
+        <p class="links">
+          <a href="https://medium.com/@t.e.kari369" target="_blank" rel="noopener">Medium</a>
+          <a href="https://www.linkedin.com/in/karinateebimo" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/Kari369" target="_blank" rel="noopener">GitHub</a>
+        </p>
+      </div>
+      <figure class="portrait">
+        <img src="img/profile.jpg" alt="Portrait of Karinate Ebimo, wearing glasses, against a plain wall." width="600" height="932">
+      </figure>
+    </div>
+  </section>
+
+  <section class="why" id="why" aria-labelledby="why-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Why it matters to me</p>
+        <h2 id="why-title">Extending reach, without losing the human</h2>
+      </div>
+      <div class="body">
+        <p>I've always been interested in the relationship between what humans can perceive, what we can physically accomplish, and what technology could help us extend.</p>
+        <p>There are environments humans cannot safely enter, distances we cannot easily cover, and situations where our physical limitations restrict what we can observe or do. Robotics offers a way to extend our reach into these spaces. But I find myself interested in a question beyond simply making machines perform tasks: how can we make them understand what a human is trying to achieve, while accounting for the circumstances surrounding that intention?</p>
+        <p>This question is what led me to Human–Machine Intent Synchronization (HMIS). For most of 2026 that meant reading and writing. Since September it has meant building and testing in simulation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">What I've been building</p>
+        <h2 id="work-title">Selected work</h2>
+      </div>
+
+      <article class="feature" aria-labelledby="p-pilot">
+        <div class="detail">
+          <span class="status">Completed · Simulation</span>
+          <h3 id="p-pilot">HMIS Experiment 1: Pilot A</h3>
+          <figure class="pilot-shot">
+            <img src="img/pilot-a.jpg" alt="Webots quarry scene: an operator turns away and wipes dust from their face beside the K-11 rover." width="1200" height="978">
+            <figcaption>The incidental case: wiping dust off the face, which crosses the halt gesture's path.</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <p class="q">Can HMIS tell deliberate, incidental and ambiguous operator input apart, using only observable signals?</p>
+          <p>The first experiment built from my framework. A simulated rover receives a stream of operator signals (hand position, muscle activation, facing) and has to decide whether a movement was meant as a command, was accidental, or is unclear and needs a question back. The true answer is hidden from the system until after it decides.</p>
+          <dl class="facts">
+            <div><dt>My part</dt><dd>Designed the experiment: the definitions of deliberate, incidental and ambiguous input, the scenarios, the confidence bands and the rules for changing them. Developed with guidance from my technical mentor.</dd></div>
+            <div><dt>Result</dt><dd>30 trials. The clear command and the half-finished halt were classified correctly 10/10. The accidental face-wipe was read as "uncertain" 10/10, so the robot asked instead of carrying on. I traced why: the score added up shape alone, with no sign the movement was meant for the robot. A proposed fix is recorded but not adopted until it is tested on new cases.</dd></div>
+            <div><dt>How it was made</dt><dd>Webots and Python. The code was written with AI assistance from my design; every rule change is logged with the evidence behind it.</dd></div>
+          </dl>
+          <p class="links"><a href="https://github.com/Kari369/hmis-pilot-a" target="_blank" rel="noopener">Code, logs and results</a></p>
+        </div>
+      </article>
+
+      <div class="projects">
+        <article class="project" aria-labelledby="p-blend">
+          <img class="shot" src="img/policy-blending.jpg" alt="Webots scene: a Clearpath Moose rover on rough terrain facing three coloured goal posts, with grey obstacles between." width="1400" height="589">
+          <span class="status">Completed · Simulation</span>
+          <h3 id="p-blend">Policy-blending shared control</h3>
+          <p>Can a robot infer which goal its driver is heading for and help, without taking over? A simplified adaptation of Dragan &amp; Srinivasa's policy-blending formalism (2013).</p>
+          <dl class="facts">
+            <div><dt>What I did</dt><dd>Built a C controller for a simulated Clearpath Moose and ran 15 logged trials under a 0.4 s command delay.</dd></div>
+            <div><dt>Result</dt><dd>Median 7.65 s with assistance vs 10.27 s manual. Constant assistance with no goal inference was slightly faster still: knowing the goal and helping well are separate problems.</dd></div>
+          </dl>
+          <p class="links">
+            <a href="https://medium.com/@t.e.kari369/how-i-implemented-policy-blending-for-shared-control-in-a-webots-simulation-285b211ce624" target="_blank" rel="noopener">Write-up</a>
+            <a href="https://github.com/Kari369/webots-policy-blending" target="_blank" rel="noopener">Code</a>
+            <a href="https://www.loom.com/share/e8ebc5d2c833434bb13cc664e3a335ef" target="_blank" rel="noopener">3-min video</a>
+          </p>
+        </article>
+
+        <article class="project" aria-labelledby="p-console">
+          <img class="shot" src="img/console.jpg" alt="HMIS mission console showing 'Hold, confirmation required', the interpreted operator intent and a 76% synchronization score." width="422" height="280">
+          <span class="status early">Early prototype · Browser</span>
+          <h3 id="p-console">HMIS mission console</h3>
+          <p>A browser demo of the core loop: an operator types an intent, the engine checks it against simulated field conditions, then executes, holds for confirmation, or flags a hazard.</p>
+          <dl class="facts">
+            <div><dt>How it was made</dt><dd>Built with a free Claude model for The Knowledge Society's Prompt-to-Product challenge. The engine is deterministic and narrow: typed input only, no real sensors.</dd></div>
+          </dl>
+          <p class="links"><a href="https://kari369.github.io/hmis-prototype/hmis-product-prototype.html" target="_blank" rel="noopener">Try the console</a></p>
+        </article>
+
+        <article class="project" aria-labelledby="p-hmis">
+          <img class="shot diagram" src="img/hmis-architecture.jpg" alt="HMIS system behavior diagram: the human as intent source, linked through two armbands, an app and a central intelligence layer to a field robot and its environment." width="620" height="440">
+          <span class="status theory">Theoretical framework</span>
+          <h3 id="p-hmis">Human–Machine Intent Synchronization</h3>
+          <p>An independent investigation into how a machine can synchronize with what its operator is trying to achieve, instead of relying only on explicit commands. It is a theoretical framework, not a built system; the experiments above test it one piece at a time.</p>
+          <dl class="facts">
+            <div><dt>Questions it asks</dt><dd>What is the human trying to achieve? How should the machine handle uncertainty before it acts? How does synchronization continue as a loop of capture, act and observe? Where would it matter: mining, disaster response and infrastructure work.</dd></div>
+            <div><dt>Written so far</dt><dd>Two technical abstracts: one on intent synchronization for field deployment, one on machine behavior under uncertainty. Both are working documents, not validated results.</dd></div>
+          </dl>
+          <p class="links">
+            <a href="research.html">Research and abstracts</a>
+            <a href="https://medium.com/@t.e.kari369/why-current-field-robotics-need-intent-synchronization-1b0c3b833eef" target="_blank" rel="noopener">Companion article</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey" id="journey" aria-labelledby="journey-title">
+    <div class="inner">
+      <div class="head-row">
+        <div class="section-head">
+          <p class="eyebrow">My journey</p>
+          <h2 id="journey-title">From a robot sketch to one testable question</h2>
+        </div>
+        <div class="controls">
+          <button type="button" id="prev" aria-controls="track" aria-label="Previous milestones">← Earlier</button>
+          <button type="button" id="next" aria-controls="track" aria-label="Next milestones">Later →</button>
+        </div>
+      </div>
+
+      <ol class="track" id="track" tabindex="0" aria-label="Timeline, oldest first. Scroll sideways or use the Earlier and Later buttons.">
+        <li>
+          <time>Sep 2024 <span class="approx">Approximate date</span></time>
+          <h3>A robot companion</h3>
+          <p>First ideas for a personal-assistant robot and gesture-controlled armbands. Ideas only, nothing built.</p>
+        </li>
+        <li>
+          <time>15 May 2025</time>
+          <h3>The first written plan</h3>
+          <p>A plan for an app that links a person to their machines: the earliest version of the idea on paper.</p>
+        </li>
+        <li>
+          <time>Jul 2025</time>
+          <h3>Finished secondary school early</h3>
+          <p>Graduated ahead of schedule and began a gap year.</p>
+        </li>
+        <li>
+          <time>16 Feb 2026</time>
+          <h3>A change of direction</h3>
+          <p>I asked myself why so much effort goes into building robots, and so little into how humans and machines understand each other. The project turned from devices to interaction.</p>
+        </li>
+        <li>
+          <time>Mar – May 2026</time>
+          <h3>Reading and research logs</h3>
+          <p>My first paper was Licklider's <i>Man-Computer Symbiosis</i> (1960). Work on probabilistic intent recognition and the DARPA Subterranean Challenge followed. I kept dated logs as the framework took shape.</p>
+        </li>
+        <li>
+          <time>Jun 2026</time>
+          <h3>First technical abstracts</h3>
+          <p>Condensed the framework into short technical abstracts to test whether I could explain it clearly.</p>
+        </li>
+        <li>
+          <time>Jul 2026 <span class="approx">Approximate date</span></time>
+          <h3>A first prototype</h3>
+          <p>Built the HMIS mission console for The Knowledge Society's Prompt-to-Product challenge.</p>
+        </li>
+        <li>
+          <time>7 Aug 2026</time>
+          <h3>Ten questions, narrowed to one</h3>
+          <p>Wrote down my ten open research questions, scored them, and chose one to start with: telling deliberate intent apart from incidental movement.</p>
+        </li>
+        <li>
+          <time>29 Aug 2026</time>
+          <h3>The Knowledge Society</h3>
+          <p>Started the program with orientation week.</p>
+        </li>
+        <li>
+          <time>12 Sep 2026</time>
+          <h3>First published article</h3>
+          <p>"My First Thoughts On Intent Synchronization" on Medium.</p>
+        </li>
+        <li>
+          <time>14 Sep 2026</time>
+          <h3>From framework to experiment</h3>
+          <p>Designed ten controlled test scenarios, with definitions of deliberate, incidental and ambiguous input and planned false-positive and false-negative cases.</p>
+        </li>
+        <li>
+          <time>30 Oct 2026</time>
+          <h3>Moonshot 2026</h3>
+          <p>Attended the conference and spoke with people working in tech.</p>
+        </li>
+        <li>
+          <time>1 Nov 2026</time>
+          <h3>Shared control, built and written up</h3>
+          <p>Published my policy-blending experiment: 15 logged trials in Webots, with the code and a video.</p>
+        </li>
+        <li>
+          <time>Nov 2026</time>
+          <h3>Pilot A complete</h3>
+          <p>The first experiment built from HMIS itself: 30 trials in Webots, one honest failure traced to its cause, and the code published.</p>
+        </li>
+      </ol>
+      <p class="legend">"Approximate date" marks dates reconstructed from memory rather than from a dated record.</p>
+    </div>
+  </section>
+
+  <section id="writing" aria-labelledby="writing-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Writing</p>
+        <h2 id="writing-title">Thinking in public</h2>
+      </div>
+      <ol class="writing-list" reversed>
+        <li>
+          <time datetime="2026-11-01">1 Nov 2026</time>
+          <div>
+            <a href="https://medium.com/@t.e.kari369/how-i-implemented-policy-blending-for-shared-control-in-a-webots-simulation-285b211ce624" target="_blank" rel="noopener">How I Implemented Policy Blending for Shared Control in a Webots Simulation</a>
+            <span class="tag">Robotics · Shared autonomy</span>
+            <p>What I built, the 15 trials, and why knowing a driver's goal and helping them well turned out to be separate problems.</p>
+          </div>
+        </li>
+        <li>
+          <time datetime="2026-10-23">23 Oct 2026</time>
+          <div>
+            <a href="https://medium.com/@t.e.kari369/why-current-field-robotics-need-intent-synchronization-1b0c3b833eef" target="_blank" rel="noopener">Why Current Field Robotics Need Intent Synchronization</a>
+            <span class="tag">HMIS · Field robotics</span>
+            <p>Current trends and gaps in field robotics, and the framework I'm proposing to bridge them.</p>
+          </div>
+        </li>
+        <li>
+          <time datetime="2026-09-12">12 Sep 2026</time>
+          <div>
+            <a href="https://medium.com/@t.e.kari369/my-first-thoughts-on-intent-synchronization-1f9df291f2ba" target="_blank" rel="noopener">My First Thoughts On Intent Synchronization</a>
+            <span class="tag">HMIS · Human–machine interaction</span>
+            <p>Where the idea started: communication between people and machines is about more than words.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="contact" id="connect" aria-labelledby="connect-title">
+    <div class="inner">
+      <div class="body">
+        <p class="eyebrow">Let's connect</p>
+        <h2 id="connect-title">Open to good conversations</h2>
+        <p>I'm happy to talk about human–machine interaction, shared autonomy and field robotics, and I welcome feedback on my work. If you're working on related problems, I'd like to hear from you.</p>
+      </div>
+      <ul>
+        <li><span class="eyebrow">Email</span><span class="email">t.e.kari369@gmail.com</span></li>
+        <li><span class="eyebrow">LinkedIn</span><a href="https://www.linkedin.com/in/karinateebimo" target="_blank" rel="noopener">linkedin.com/in/karinateebimo</a></li>
+        <li><span class="eyebrow">Medium</span><a href="https://medium.com/@t.e.kari369" target="_blank" rel="noopener">medium.com/@t.e.kari369</a></li>
+        <li><span class="eyebrow">GitHub</span><a href="https://github.com/Kari369" target="_blank" rel="noopener">github.com/Kari369</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <span>Karinate D. Ebimo</span>
+    <span>Lagos, Nigeria · 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var track = document.getElementById('track');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  if (!track || !prev || !next) return;
+  function step() {
+    var item = track.querySelector('li');
+    if (!item) return track.clientWidth;
+    var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return item.getBoundingClientRect().width + gap;
+  }
+  function update() {
+    var max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+  }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function go(dir) {
+    var s = step();
+    var max = track.scrollWidth - track.clientWidth;
+    var index = Math.round(track.scrollLeft / s) + dir;
+    var target = Math.max(0, Math.min(max, index * s));
+    var start = track.scrollLeft;
+    track.scrollTo({ left: target, behavior: reduce ? 'auto' : 'smooth' });
+    // Some browsers stall a smooth scroll inside a snapping container; jump instead.
+    setTimeout(function () {
+      if (Math.abs(track.scrollLeft - start) < 1 && Math.abs(target - start) >= 1) {
+        track.scrollTo({ left: target, behavior: 'auto' });
+      }
+      update();
+    }, 450);
+  }
+  prev.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
+  track.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>

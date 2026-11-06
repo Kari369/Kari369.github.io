@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HMIS Research · Karinate Ebimo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="The questions, technical abstracts and literature behind Human–Machine Intent Synchronization (HMIS), a theoretical framework by Karinate D. Ebimo.">
+<meta property="og:title" content="HMIS Research · Karinate Ebimo">
+<meta property="og:image" content="https://kari369.github.io/img/profile.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: same editorial column as the home page; numbered questions and process steps are real sequences */
+:root {
+  --cream: #F5EFE3;
+  --cream-deep: #EDE4D4;
+  --burgundy: #501D2B;
+  --charcoal: #393633;
+  --muted: #625b55;
+  --rose: #B58A83;
+  --white: #FBF8F2;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--cream); color: var(--charcoal); font: 400 17px/1.65 var(--font-body); -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--cream); }
+a { color: var(--burgundy); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--burgundy); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); color: var(--burgundy); font-weight: 600; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.inner { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font: 600 12.5px/1.3 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--cream) 94%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--rose) 45%, transparent); backdrop-filter: blur(6px); }
+.nav .inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.nav .name { font: 600 18px/1 var(--font-display); color: var(--burgundy); text-decoration: none; white-space: nowrap; }
+.nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; overflow-x: auto; }
+.nav ul a { color: var(--charcoal); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.nav ul a:hover { color: var(--burgundy); }
+
+section { padding-block: 80px; }
+section + section { border-top: 1px solid color-mix(in srgb, var(--rose) 40%, transparent); }
+.section-head { display: grid; gap: 10px; margin-bottom: 36px; max-width: 680px; }
+.section-head h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.12; }
+.section-head p { color: var(--charcoal); max-width: 62ch; }
+
+.page-head { padding-block: 64px 72px; }
+.page-head .inner { display: grid; gap: 22px; }
+.page-head h1 { font-size: clamp(2.2rem, 5.4vw, 3.6rem); line-height: 1.08; letter-spacing: -0.01em; max-width: 18ch; }
+.page-head .lede { max-width: 62ch; font-size: 1.12rem; }
+.back { font-weight: 600; font-size: 15px; }
+
+.status-band { background: var(--white); border-block: 1px solid color-mix(in srgb, var(--rose) 40%, transparent); }
+.status-band .inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; padding-block: 36px; }
+.status-band h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.status-band p { font-size: 15.5px; }
+
+.questions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; counter-reset: q; }
+.questions li { counter-increment: q; display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 4px 12px; padding-block: 24px; border-top: 1px solid var(--rose); }
+.questions li::before { content: counter(q, decimal-leading-zero); font: italic 400 1.6rem/1.1 var(--font-display); color: var(--rose); grid-row: span 2; }
+.questions h3 { font-size: 1.25rem; line-height: 1.25; }
+.questions p { font-size: 15.5px; }
+
+.abstracts { display: grid; gap: 28px; }
+.abstract { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(24px, 5vw, 64px); padding-top: 28px; border-top: 2px solid var(--burgundy); }
+.abstract .label { display: grid; gap: 10px; align-content: start; }
+.abstract h3 { font-size: clamp(1.4rem, 2.6vw, 1.75rem); line-height: 1.2; }
+.abstract .sub { font: italic 400 1.08rem/1.45 var(--font-display); color: var(--charcoal); }
+.abstract .body { display: grid; gap: 14px; max-width: 64ch; }
+.status { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font: 600 12.5px/1 var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--burgundy); }
+.callout { background: var(--white); border-left: 3px solid var(--burgundy); padding: 14px 18px; font-size: 15.5px; }
+.callout strong { color: var(--burgundy); }
+
+.since { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 8px; }
+.since article { display: grid; gap: 10px; align-content: start; padding-top: 18px; border-top: 1px solid var(--rose); min-width: 0; }
+.since img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; background: var(--cream-deep); }
+.since h3 { font-size: 1.2rem; }
+.since p { font-size: 15.5px; }
+.links { display: flex; flex-wrap: wrap; gap: 6px 20px; font-weight: 600; font-size: 14.5px; }
+
+.process { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; counter-reset: s; }
+.process li { counter-increment: s; display: grid; gap: 8px; align-content: start; padding-top: 18px; border-top: 1px solid var(--rose); }
+.process li::before { content: counter(s, decimal-leading-zero); font: 600 13px/1 var(--font-body); letter-spacing: 0.1em; color: var(--muted); }
+.process h3 { font-size: 1.25rem; }
+.process p { font-size: 15.5px; }
+
+.lit { list-style: none; margin: 0; padding: 0; display: grid; }
+.lit li { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 24px; padding-block: 22px; border-top: 1px solid var(--rose); }
+.lit li:last-child { border-bottom: 1px solid var(--rose); }
+.lit .year { font: 600 14px/1.6 var(--font-body); color: var(--muted); font-variant-numeric: tabular-nums; }
+.lit h3 { font-size: 1.2rem; line-height: 1.3; }
+.lit .by { font-size: 14.5px; color: var(--muted); margin-top: 2px; }
+.lit p { margin-top: 6px; font-size: 15.5px; max-width: 66ch; }
+
+footer { background: var(--burgundy); color: var(--cream); }
+footer .inner { padding-block: 22px; font-size: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer a { color: var(--cream); }
+
+@media (max-width: 900px) {
+  .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  section { padding-block: 60px; }
+  .status-band .inner, .questions, .abstract, .since, .process { grid-template-columns: minmax(0, 1fr); }
+  .lit li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .nav .name { display: none; }
+  .nav ul { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="inner">
+    <a class="name" href="index.html">Karinate Ebimo</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#questions">Questions</a></li>
+        <li><a href="#abstracts">Abstracts</a></li>
+        <li><a href="#since">Experiments</a></li>
+        <li><a href="#literature">Literature</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-head" aria-labelledby="title">
+    <div class="inner">
+      <a class="back" href="index.html#work">← Back to selected work</a>
+      <p class="eyebrow">Research · Human–Machine Intent Synchronization</p>
+      <h1 id="title">The questions, frameworks and ideas behind HMIS</h1>
+      <p class="lede">HMIS began as an independent investigation into how machines could move beyond explicit commands and instead synchronize with the intent of the human operating them. This page presents the research direction and the technical work developed from that question.</p>
+    </div>
+  </section>
+
+  <div class="status-band" aria-label="What is theory and what is built">
+    <div class="inner">
+      <div>
+        <h3>Theory</h3>
+        <p>HMIS is a developing framework. Its proposed architecture, operating principles and synchronization mechanisms are still being refined through research and experimentation.</p>
+      </div>
+      <div>
+        <h3>Built</h3>
+        <p>Software simulations that test selected pieces of it, described below. They are partial implementations, not a complete HMIS system, and they do not validate the whole framework.</p>
+      </div>
+    </div>
+  </div>
+
+  <section id="questions" aria-labelledby="q-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Research direction</p>
+        <h2 id="q-title">From commands to intent</h2>
+        <p>The central investigation is not simply how to make machines more autonomous, but how to create a reliable relationship between human intent, machine interpretation, environmental context and action.</p>
+      </div>
+      <ol class="questions">
+        <li>
+          <h3>What is the human actually trying to achieve?</h3>
+          <p>HMIS treats observable behavior as a signal from which intended outcomes may be inferred, rather than assuming that every action must be explicitly translated into a command.</p>
+        </li>
+        <li>
+          <h3>How should the machine respond to uncertainty?</h3>
+          <p>An intent prediction is not automatically correct. The framework therefore considers confidence, environmental constraints, validation, confirmation and safe degradation before execution.</p>
+        </li>
+        <li>
+          <h3>How does synchronization happen continuously?</h3>
+          <p>The relationship is a loop rather than a one-time command: capture, synchronize, act, observe the result, and feed that information into the next decision.</p>
+        </li>
+        <li>
+          <h3>Where could this matter in the real world?</h3>
+          <p>Environments where direct human presence is difficult or dangerous: field deployment, mining, disaster response and other infrastructure-level operations.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="abstracts" aria-labelledby="a-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Technical abstracts</p>
+        <h2 id="a-title">How the research is currently framed</h2>
+        <p>These are working documents, not claims that the complete system has been experimentally validated.</p>
+      </div>
+      <div class="abstracts">
+        <article class="abstract" aria-labelledby="ab1">
+          <div class="label">
+            <span class="eyebrow">Abstract 01</span>
+            <h3 id="ab1">Human–Machine Intent Synchronization for Field Deployment Operations</h3>
+            <p class="sub">Synchronizing human intent with machine behavior under environmental and operational constraints.</p>
+          </div>
+          <div class="body">
+            <p>A human–machine interaction model in which the human remains the primary source of intent, while the machine interprets, predicts, validates and executes within defined operational boundaries.</p>
+            <p>Instead of a sequence of isolated commands, intent is treated as a continuous signal. The machine becomes a responsive teammate whose behavior is shaped by both the operator's intent and the state of the surrounding environment.</p>
+            <p>The framework focuses on field deployment, where an operator may need to influence a remote machine without entering the environment the machine is working in.</p>
+            <p class="callout"><strong>Status:</strong> a theoretical framework and ongoing design investigation. Prototyping, simulation and empirical validation are needed to establish performance.</p>
+          </div>
+        </article>
+        <article class="abstract" aria-labelledby="ab2">
+          <div class="label">
+            <span class="eyebrow">Abstract 02</span>
+            <h3 id="ab2">Intent Synchronization and Machine Behavior Under Uncertainty</h3>
+            <p class="sub">Prediction, validation, feedback and graceful degradation when the machine's interpretation may be wrong.</p>
+          </div>
+          <div class="body">
+            <p>A machine's reading of what a human intends can be uncertain, so this abstract looks at what should happen between prediction and execution.</p>
+            <p>HMIS proposes that the machine weighs its confidence and the operational context before committing to an action. Depending on the situation, it may execute within safe limits, ask for confirmation, or degrade to a safer state.</p>
+            <p>The consequences of each action then become information for the next synchronization cycle.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="since" aria-labelledby="s-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">From description to testing</p>
+        <h2 id="s-title">Experiments built so far</h2>
+        <p>The abstracts ended with one next step: turn the concepts into simulations that test the proposed behavior. These are the first two.</p>
+      </div>
+      <div class="since">
+        <article>
+          <img src="img/pilot-a.jpg" alt="Webots quarry scene: an operator wipes dust from their face beside the K-11 rover." width="1200" height="978">
+          <span class="status">Completed · Simulation</span>
+          <h3>HMIS Experiment 1: Pilot A</h3>
+          <p>Tests abstract 02's core question: can the machine tell a deliberate command from an accidental movement, and ask when it is unsure? 30 trials in Webots. Clear and half-finished commands were handled correctly; an accidental face-wipe was read as uncertain, and the cause was traced.</p>
+          <p class="links"><a href="https://github.com/Kari369/hmis-pilot-a" target="_blank" rel="noopener">Code, logs and results</a></p>
+        </article>
+        <article>
+          <img src="img/policy-blending.jpg" alt="Webots scene: a Clearpath Moose rover facing three coloured goal posts." width="1400" height="589">
+          <span class="status">Completed · Simulation</span>
+          <h3>Policy-blending shared control</h3>
+          <p>A simplified adaptation of an existing shared-control method: the robot infers which goal its driver is heading for and helps without taking over. 15 logged trials under a 0.4 s command delay.</p>
+          <p class="links">
+            <a href="https://medium.com/@t.e.kari369/how-i-implemented-policy-blending-for-shared-control-in-a-webots-simulation-285b211ce624" target="_blank" rel="noopener">Write-up</a>
+            <a href="https://github.com/Kari369/webots-policy-blending" target="_blank" rel="noopener">Code</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="p-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Research process</p>
+        <h2 id="p-title">How the investigation is developing</h2>
+      </div>
+      <ol class="process">
+        <li><h3>Observe</h3><p>Identify problems in existing human–machine interaction and where command-based systems become limiting.</p></li>
+        <li><h3>Frame</h3><p>Turn observations into technical questions, system behavior requirements and possible interaction models.</p></li>
+        <li><h3>Compare</h3><p>Connect the framework to existing research in human–computer interaction, robotics, shared autonomy and machine learning.</p></li>
+        <li><h3>Validate</h3><p>Move from conceptual architecture to simulations, prototypes and, eventually, real-world testing.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="literature" aria-labelledby="l-title">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Selected literature</p>
+        <h2 id="l-title">Research the framework is connected to</h2>
+        <p>Points of comparison for HMIS, and what each one changed in my thinking.</p>
+      </div>
+      <ol class="lit">
+        <li>
+          <span class="year">1960</span>
+          <div>
+            <h3>Man–Computer Symbiosis</h3>
+            <p class="by">J.C.R. Licklider</p>
+            <p>An early vision of close cooperation between humans and computers, each doing what it does best. It is the conceptual predecessor of HMIS; my framework asks what that partnership looks like away from the desk, in the field.</p>
+          </div>
+        </li>
+        <li>
+          <span class="year">Shared autonomy</span>
+          <div>
+            <h3>Probabilistic Human Intent Recognition for Shared Autonomy in Assistive Robotics</h3>
+            <p class="by">Jain and Argall</p>
+            <p>A robot keeps several hypotheses about a person's goal and updates them as it observes. It showed me that intent recognition is one part of synchronization, not the whole of it.</p>
+          </div>
+        </li>
+        <li>
+          <span class="year">Search and rescue</span>
+          <div>
+            <h3>Human–Robot Team Performance Compared to Full Robot Autonomy in 16 Real-World Search and Rescue Missions</h3>
+            <p class="by">An adaptation of the DARPA Subterranean Challenge</p>
+            <p>Evidence from real missions that human involvement matters most when robots meet conditions they cannot handle alone, and that removing the human entirely leaves a system unable to recover.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="links" style="margin-top:28px">
+        <a href="https://medium.com/@t.e.kari369/why-current-field-robotics-need-intent-synchronization-1b0c3b833eef" target="_blank" rel="noopener">Companion article: Why Current Field Robotics Need Intent Synchronization</a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <span>Karinate D. Ebimo · <a href="index.html">Home</a></span>
+    <span>Open to feedback: t.e.kari369@gmail.com</span>
+  </div>
+</footer>
+</body>
+</html>
