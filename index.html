@@ -100,6 +100,7 @@ section + section { border-top: 1px solid color-mix(in srgb, var(--rose) 40%, tr
 .pilot-shot { margin: 8px 0 0; }
 .pilot-shot img { width: 100%; aspect-ratio: 16 / 11; object-fit: cover; border-radius: 2px; background: var(--cream-deep); }
 .pilot-shot figcaption { margin-top: 8px; font-size: 13.5px; color: var(--muted); }
+.pilot-shot.wide img { aspect-ratio: 16 / 9; }
 
 .projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 36px; margin-top: 8px; }
 .project { display: grid; gap: 14px; align-content: start; min-width: 0; padding-top: 22px; border-top: 1px solid var(--rose); }
@@ -256,6 +257,33 @@ footer .inner { padding-block: 22px; font-size: 14px; display: flex; justify-con
         </div>
       </article>
 
+      <article class="feature" aria-labelledby="p-subt">
+        <div class="detail">
+          <span class="status">Completed · Simulation</span>
+          <h3 id="p-subt">SubT Explorer: supervised underground exploration</h3>
+          <figure class="pilot-shot wide">
+            <img src="img/subt-mine.jpg" alt="Aerial view of a simulated underground mine: a maze of tunnels, 666 square metres in all, with 8 hidden objects." width="800" height="450">
+            <figcaption>The simulated mine: 666 m² of tunnel with 8 hidden objects, modelled on the DARPA Subterranean Challenge.</figcaption>
+          </figure>
+        </div>
+        <div class="detail">
+          <p class="q">When the radio link drops underground, what should a robot do on its own, and what is a human supervisor still good for?</p>
+          <p>A one-week recreation of the Subterranean Challenge mission loop in Webots. A ground robot enters an unknown mine, maps it with lidar, chooses where to explore, finds survivors and hazards, and reports them to a base station over a radio link that fades in rock. A human operator sees a console that shows only what the link delivered, and can click the map to send the robot somewhere.</p>
+          <dl class="facts">
+            <div><dt>Why it matters to HMIS</dt><dd>It is groundwork for my framework: a test of how a human's intent and a robot's own judgment share control when they cannot always talk.</dd></div>
+            <div><dt>What I did</dt><dd>Replicated the SubT mission loop in simulation, ran 12 logged trials across four setups (manual driving, two autonomous variants, and supervised autonomy) on a 10-minute clock, and scored them with SubT's 5 m rule.</dd></div>
+            <div><dt>Result</dt><dd>Manual driving stalled at the edge of radio range: about 48% of the mine mapped, 2 of 8 objects. Autonomy mapped about 92% and found 7 of 8, but missed the same object in every run. Supervised autonomy was the only setup to find all 8 objects, in 2 of its 3 runs (7 in the other), at the cost of more time and about 4 operator interventions per run.</dd></div>
+            <div><dt>What it showed</dt><dd>The robot was most useful when it could act on my intent while out of contact. I was most useful when I told it something it had no way of knowing.</dd></div>
+            <div><dt>Limits</dt><dd>Three trials per setup is a small sample, and one supervised run still missed an object. The robot's position comes from the simulator rather than SLAM, mapping is 2D, and the radio is a simple model.</dd></div>
+          </dl>
+          <p class="links">
+            <a href="https://github.com/Kari369/subt-explorer" target="_blank" rel="noopener">Code</a>
+            <a href="https://medium.com/@t.e.kari369/how-i-replicated-subt-style-supervised-underground-exploration-49b94ae9c322" target="_blank" rel="noopener">Write-up</a>
+            <a href="https://www.loom.com/share/0c94c9640c174ad699c7a72a9d526442" target="_blank" rel="noopener">7-min video</a>
+          </p>
+        </div>
+      </article>
+
       <div class="projects">
         <article class="project" aria-labelledby="p-blend">
           <img class="shot" src="img/policy-blending.jpg" alt="Webots scene: a Clearpath Moose rover on rough terrain facing three coloured goal posts, with grey obstacles between." width="1400" height="589">
@@ -390,6 +418,11 @@ footer .inner { padding-block: 22px; font-size: 14px; display: flex; justify-con
           <time>Nov 2026</time>
           <h3>Pilot A complete</h3>
           <p>The first experiment built from HMIS itself: 30 trials in Webots, one honest failure traced to its cause, and the code published.</p>
+        </li>
+        <li>
+          <time>14 Nov 2026</time>
+          <h3>SubT Explorer published</h3>
+          <p>Recreated a SubT-style mine mission in Webots and compared manual, autonomous and supervised exploration over 12 trials. Code, write-up and a 7-minute video are public.</p>
         </li>
       </ol>
       <p class="legend">"Approximate date" marks dates reconstructed from memory rather than from a dated record.</p>

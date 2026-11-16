@@ -83,7 +83,7 @@ section + section { border-top: 1px solid color-mix(in srgb, var(--rose) 40%, tr
 .callout { background: var(--white); border-left: 3px solid var(--burgundy); padding: 14px 18px; font-size: 15.5px; }
 .callout strong { color: var(--burgundy); }
 
-.since { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 8px; }
+.since { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 8px; }
 .since article { display: grid; gap: 10px; align-content: start; padding-top: 18px; border-top: 1px solid var(--rose); min-width: 0; }
 .since img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; background: var(--cream-deep); }
 .since h3 { font-size: 1.2rem; }
@@ -110,6 +110,7 @@ footer a { color: var(--cream); }
 
 @media (max-width: 900px) {
   .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .since { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 720px) {
   section { padding-block: 60px; }
@@ -231,7 +232,7 @@ footer a { color: var(--cream); }
       <div class="section-head">
         <p class="eyebrow">From description to testing</p>
         <h2 id="s-title">Experiments built so far</h2>
-        <p>The abstracts ended with one next step: turn the concepts into simulations that test the proposed behavior. These are the first two.</p>
+        <p>The abstracts ended with one next step: turn the concepts into simulations that test the proposed behavior. These are the experiments so far.</p>
       </div>
       <div class="since">
         <article>
@@ -249,6 +250,16 @@ footer a { color: var(--cream); }
           <p class="links">
             <a href="https://medium.com/@t.e.kari369/how-i-implemented-policy-blending-for-shared-control-in-a-webots-simulation-285b211ce624" target="_blank" rel="noopener">Write-up</a>
             <a href="https://github.com/Kari369/webots-policy-blending" target="_blank" rel="noopener">Code</a>
+          </p>
+        </article>
+        <article>
+          <img src="img/subt-mine.jpg" alt="Aerial view of a simulated underground mine: a maze of tunnels with 8 hidden objects." width="800" height="450">
+          <span class="status">Completed · Simulation</span>
+          <h3>SubT Explorer</h3>
+          <p>Tests how a human's intent and a robot's own judgment share control when the radio link drops. A ground robot explores a simulated mine while a human supervises. 12 trials across four setups: supervised autonomy was the only one to find all 8 hidden objects (in 2 of 3 runs), at the cost of more time and operator attention.</p>
+          <p class="links">
+            <a href="https://github.com/Kari369/subt-explorer" target="_blank" rel="noopener">Code</a>
+            <a href="https://medium.com/@t.e.kari369/how-i-replicated-subt-style-supervised-underground-exploration-49b94ae9c322" target="_blank" rel="noopener">Write-up</a>
           </p>
         </article>
       </div>
